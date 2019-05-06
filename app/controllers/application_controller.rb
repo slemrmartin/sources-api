@@ -28,7 +28,7 @@ class ApplicationController < ActionController::API
     ManageIQ::API::Common::Request.with_request(request) do |current|
       begin
         if Tenant.tenancy_enabled? && current.required_auth?
-          tenant = Tenant.find_or_create_by(:external_tenant => current.user.tenant)
+          tenant = Tenant.find_or_create_by!(:external_tenant => current.user.tenant)
 
           ActsAsTenant.with_tenant(tenant) { yield }
         else
